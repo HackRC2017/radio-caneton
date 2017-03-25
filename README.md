@@ -10,5 +10,5 @@ pip3 install -e .
 ## running
 
 ```shell
-python3 -m rad_caneton
+python3 -m radio_caneton
 ```

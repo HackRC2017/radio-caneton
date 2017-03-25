@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='rad-caneton',
+    name='radio-caneton',
     version='0.1.0',
-    packages=['rad_caneton'],
+    packages=['radio_caneton'],
     install_requires=[
         'apscheduler==3.3.1',
         'pymongo==3.4.0',
