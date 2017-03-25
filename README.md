@@ -1,4 +1,4 @@
-# rad-caneton
+# :duck: radio-caneton
 
 ## development
 
