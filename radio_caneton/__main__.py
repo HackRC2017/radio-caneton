@@ -34,6 +34,7 @@ def escape_keys(original):
 def update_db():
     logging.info('updating db')
     articles_added = 0
+    obamo_json_errors = 0
     articles = rc.get_articles()
     for article in articles:
         if db.articles.find_one({'id': article['id']}):
@@ -42,7 +43,13 @@ def update_db():
         logging.info(f'getting obamo: {article["selfLink"]["href"]}')
         r = requests.post(f'http://{OBAMO_HOST}/readtime',
                           json={'url': article['selfLink']['href']})
-        article['readTime'] = r.json()
+        try:
+            obamo_json = r.json()
+        except json.decoder.JSONDecodeError:
+            logging.info('got bad obamo json response')
+            obamo_json_errors += 1
+            continue
+        article['readTime'] = obamo_json
         db.articles.insert_one(escape_keys(article))
         logging.info(f'added article {article["id"]} to db')
         articles_added += 1
@@ -50,6 +57,7 @@ def update_db():
         'datetime': str(datetime.datetime.now()),
         'articles_added': articles_added,
         'articles_fetched': len(articles),
+        'obamo_json_errors': obamo_json_errors,
     })
 
 
