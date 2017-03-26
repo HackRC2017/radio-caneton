@@ -1,4 +1,5 @@
 import json
+import os
 
 import requests
 
@@ -29,5 +30,5 @@ def get_articles():
         themes = json.load(f)['themes']
     for theme in themes:
         if theme['id'] not in THEMES_BLACKLIST:
-            articles.append(get_lineup_articles(theme['lineupLink']['href']))
+            articles.extend(get_lineup_articles(theme['lineupLink']['href']))
     return articles
