@@ -13,9 +13,11 @@ python3 -m radio_caneton
 ```shell
 docker build -t radio_caneton .
 
-docker run --name mongo -d mongo
+docker run --name tempo-mongo -d mongo
 
-docker run --name radio_caneton -d \
-    --link some-mongo:mongo \
-    radio_caneton
+docker run -d \
+    --name radio-caneton \
+    --link tempo-mongo:mongo \
+    -e 'MONGODB_HOST=mongo' \
+    radio-caneton
 ```
