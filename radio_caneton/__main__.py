@@ -55,7 +55,7 @@ def update_db():
         logging.info(f'added article {article["id"]} to db')
         articles_added += 1
     db.stats.insert_one({
-        'datetime': str(datetime.datetime.now()),
+        'datetime': datetime.datetime.utcnow(),
         'articles_added': articles_added,
         'articles_fetched': len(articles),
         'obamo_json_errors': obamo_json_errors,
