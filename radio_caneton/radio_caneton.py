@@ -38,4 +38,5 @@ def get_articles():
             a = get_lineup_articles(theme['lineupLink']['href'])
             logging.info(f'theme {theme["id"]} returned {len(a)} articles')
             articles.extend(a)
+    logging.info(f'returning {len(articles)} articles')
     return articles

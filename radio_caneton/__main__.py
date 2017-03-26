@@ -39,6 +39,7 @@ def update_db():
         if db.articles.find_one({'id': article['id']}):
             logging.info(f'article {article["id"]} already in db')
             continue
+        logging.info(f'getting obamo: {article["selfLink"]["href"]}')
         r = requests.post(f'http://{OBAMO_HOST}/readtime',
                           json={'url': article['selfLink']['href']})
         article['readTime'] = r.json()
@@ -48,6 +49,7 @@ def update_db():
     db.stats.insert_one({
         'datetime': str(datetime.datetime.now()),
         'articles_added': articles_added,
+        'articles_fetched': len(articles),
     })
 
 
