@@ -36,7 +36,7 @@ def update_db():
     articles_added = 0
     articles = rc.get_articles()
     for article in articles:
-        if db.articles.find({'id': article['id']}):
+        if db.articles.find_one({'id': article['id']}):
             logging.info(f'article {article["id"]} already in db')
             continue
         r = requests.post(f'http://{OBAMO_HOST}/readtime',
