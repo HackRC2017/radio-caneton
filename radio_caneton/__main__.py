@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import os
 
 import pymongo
@@ -8,6 +9,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 from . import radio_caneton as rc
 
+
+logging.getLogger().setLevel(logging.INFO)
 
 OBAMO_HOST = os.environ.get('OBAMO_HOST')
 
@@ -29,15 +32,18 @@ def escape_keys(original):
 
 
 def update_db():
+    logging.info('updating db')
     articles_added = 0
     articles = rc.get_articles()
     for article in articles:
         if db.articles.find({'id': article['id']}):
+            logging.info(f'article {article["id"]} already in db')
             continue
         r = requests.post(f'http://{OBAMO_HOST}/readtime',
                           json={'url': article['selfLink']['href']})
         article['readTime'] = r.json()
         db.articles.insert_one(escape_keys(article))
+        logging.info(f'added article {article["id"]} to db')
         articles_added += 1
     db.stats.insert_one({
         'datetime': str(datetime.datetime.now()),
