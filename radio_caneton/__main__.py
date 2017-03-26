@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 
@@ -24,6 +25,7 @@ def escape_keys(original):
 
 
 def update_db():
+    articles_added = 0
     articles = rc.get_articles()
     for article in articles:
         if db.articles.find({'id': article['id']}):
@@ -32,6 +34,11 @@ def update_db():
                           json={'url': article['selfLink']['href']})
         article['readTime'] = r.json()
         db.articles.insert_one(escape_keys(article))
+        articles_added += 1
+    db.stats.insert_one({
+        'datetime': str(datetime.datetime.now()),
+        'articles_added': articles_added,
+    })
 
 
 update_db()
