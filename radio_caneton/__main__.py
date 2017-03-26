@@ -15,8 +15,8 @@ MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
 MONGODB_PORT = os.environ.get('MONGODB_PORT', 27017)
 MONGODB_DB = os.environ.get('MONGODB_DB', 'tempo')
 
-mongo_client = MongoClient(MONGODB_HOST, MONGODB_PORT)
-db = mongo_client[MONGODB_DB]
+client = pymongo.MongoClient(MONGODB_HOST, MONGODB_PORT)
+db = client[MONGODB_DB]
 
 
 def escape_keys(original):
