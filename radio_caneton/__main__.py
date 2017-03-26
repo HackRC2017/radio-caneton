@@ -13,7 +13,7 @@ from . import radio_caneton as rc
 logging.getLogger().setLevel(logging.INFO)
 
 OBAMO_HOST = os.environ.get('OBAMO_HOST', 'obamo')
-OBAMO_HOST = os.environ.get('OBAMO_PORT', 5000)
+OBAMO_PORT = os.environ.get('OBAMO_PORT', 5000)
 
 MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
 MONGODB_PORT = os.environ.get('MONGODB_PORT', 27017)
