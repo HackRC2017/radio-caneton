@@ -12,7 +12,8 @@ from . import radio_caneton as rc
 
 logging.getLogger().setLevel(logging.INFO)
 
-OBAMO_HOST = os.environ.get('OBAMO_HOST')
+OBAMO_HOST = os.environ.get('OBAMO_HOST', 'obamo')
+OBAMO_HOST = os.environ.get('OBAMO_PORT', 5000)
 
 MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
 MONGODB_PORT = os.environ.get('MONGODB_PORT', 27017)
@@ -41,7 +42,7 @@ def update_db():
             logging.info(f'article {article["id"]} already in db')
             continue
         logging.info(f'getting obamo: {article["selfLink"]["href"]}')
-        r = requests.post(f'http://{OBAMO_HOST}/readtime',
+        r = requests.post(f'http://{OBAMO_HOST}:{OBAMO_PORT}/readtime',
                           json={'url': article['selfLink']['href']})
         try:
             obamo_json = r.json()

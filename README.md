@@ -18,8 +18,8 @@ docker run --name tempo-mongo -d mongo
 docker run -d \
     --name radio-caneton \
     --link tempo-mongo:mongo \
+    --link obamo:obamo \
     -e 'MONGODB_HOST=mongo' \
-    -e 'OBAMO_HOST=<OBAMO_HOST>' \
     -e 'RC_AUTH_KEY=<RC_AUTH_KEY>' \
     radio-caneton
 ```
